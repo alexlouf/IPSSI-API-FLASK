@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="fr">
   <head>
-    <meta charset="utf-8" />
-    <title>Chart.js Example</title>
+    <meta charset="UTF-8">
+    <title>Prix crypto</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
-    <!-- import plugin script -->
+
     <script src='static/Chart.min.js'></script>
   </head>
   <body>
@@ -24,14 +24,34 @@
           <li class="nav-item">
             <a class="nav-link" href="/market">Marketcap</a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/exchange">BTC trading Pair & Market</a>
+          </li>
         </ul>
       </div>
     </nav>
     <div class="container d-flex flex-column align-items-center">
-      <h1>Prix du Bitcoin</h1>
-      <!-- bar chart canvas element -->
+      <h1>Prix de {{coin}}</h1>
+      <form class="align-self-start" id="form">
+            <div class="form-group">
+                <label for="select">Select your Crypto</label>
+                <select class="form-control" id="select">
+                  <option value="BTC">BTC</option>
+                  <option value="ETH">ETH</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="start">Start date</label>
+                <input class="form-control" type="date" value="2008-08-19" id="start">
+            </div>
+            <div class="form-group">
+                <label for="end">End date</label>
+                <input class="form-control" type="date" value="2020-08-19" id="end">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
       <canvas id="myChart" width="1000" height="700"></canvas>
-      <p id="caption">Evolution du prix du Bitcoin</p>
+      <p id="caption">Evolution du prix de {{coin}}</p>
     </div>
 
 
@@ -72,8 +92,16 @@
         type: 'line',
         data: chartData,
       });
+
+
     </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx" crossorigin="anonymous"></script>
+    <script>
+      $("#form")[0].addEventListener("submit", (e) => {
+        e.preventDefault();
+        window.location.href = window.location.href.split('?')[0] + "?coin=" + $("#select")[0].value + "&start=" + $("#start")[0].value + "&end=" + $("#end")[0].value
+      })
+  </script>
   </body>
 </html>
